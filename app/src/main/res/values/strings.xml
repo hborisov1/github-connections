@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">GitHubConnections</string>
+
+    <string name="login_username">Username</string>
+    <string name="login_login">Login</string>
+    <string name="user_details_name">Name:</string>
+    <string name="user_details_bio">Bio:</string>
+    <string name="user_details_location">Location:</string>
+    <string name="user_details_followers_count">Followers count:</string>
+    <string name="user_details_following_count">Following count:</string>
+    <string name="user_details_repos_count">Repos count:</string>
+    <string name="user_details_logout">Logout</string>
+    <string name="user_details_avatar">Avatar</string>
+    <string name="repo_item_forks">Forks</string>
+    <string name="repo_item_watchers">Watchers</string>
 </resources>
