@@ -7,7 +7,7 @@
     tools:context=".UserDetailsFragment">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewAvatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -25,7 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/user_details_name"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageViewAvatar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -115,7 +115,7 @@
         tools:text="22" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reposList"
+        android:id="@+id/recyclerViewRepos"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -125,7 +125,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogout"
         tools:listitem="@layout/list_item_repo" />
 
     <TextView
@@ -148,12 +148,12 @@
         tools:text="5" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonLogout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/user_details_logout"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/imageViewAvatar"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

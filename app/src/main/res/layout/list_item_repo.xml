@@ -25,7 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textSize="9sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/repo_item_forks"
-        android:textSize="9sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewForks"
         app:layout_constraintStart_toStartOf="@+id/textViewForks"
         app:layout_constraintTop_toBottomOf="@+id/textViewForks" />
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/repo_item_watchers"
-        android:textSize="9dp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewWatchers"
         app:layout_constraintStart_toStartOf="@+id/textViewWatchers"
         app:layout_constraintTop_toBottomOf="@+id/textViewWatchers" />
