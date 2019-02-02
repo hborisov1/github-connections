@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.githubconnections.R
 import com.example.githubconnections.databinding.FragmentLoginBinding
-import com.example.githubconnections.utils.SharedPrefsUtils
+import com.example.githubconnections.utils.UserUtils
 
 class LoginFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class LoginFragment : Fragment() {
             DataBindingUtil.inflate<FragmentLoginBinding>(inflater, R.layout.fragment_login, container, false)
 
         dataBinding.buttonLogin.setOnClickListener { v ->
-            SharedPrefsUtils(context).setUserLoggedIn()
+            UserUtils(context).setUserLoggedIn()
             v.findNavController().navigate(R.id.action_loginFragment_to_userDetailsFragment)
         }
         return dataBinding.root

@@ -3,7 +3,8 @@ package com.example.githubconnections.utils
 import android.content.Context
 import android.preference.PreferenceManager
 
-class SharedPrefsUtils(val context: Context?) {
+// TODO inject this
+class UserUtils(private val context: Context?) {
 
     fun setUserLoggedIn() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.githubconnections.R
 import com.example.githubconnections.databinding.FragmentUsersListBinding
-import com.example.githubconnections.utils.SharedPrefsUtils
+import com.example.githubconnections.utils.UserUtils
 
 class UsersListFragment : Fragment() {
 
@@ -24,7 +24,7 @@ class UsersListFragment : Fragment() {
             v.findNavController().navigate(R.id.action_usersListFragment_to_userDetailsFragment)
         }
         dataBinding.buttonTestLogout.setOnClickListener { v ->
-            SharedPrefsUtils(context).setUserLoggedOut()
+            UserUtils(context).setUserLoggedOut()
             v.findNavController().navigate(R.id.action_usersListFragment_to_loginFragment)
         }
         return dataBinding.root
