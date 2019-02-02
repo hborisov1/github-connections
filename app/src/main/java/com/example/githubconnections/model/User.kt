@@ -1,8 +1,9 @@
 package com.example.githubconnections.model
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
-
+@Entity(primaryKeys = ["username"])
 data class User(
     @field:SerializedName("login")
     val username : String,
