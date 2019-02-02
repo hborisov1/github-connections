@@ -2,14 +2,20 @@ package com.example.githubconnections
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.example.githubconnections.databinding.ActivityMainBinding
+import androidx.navigation.findNavController
+import com.example.githubconnections.utils.SharedPrefsUtils
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        setContentView(R.layout.activity_main)
+        if (!SharedPrefsUtils(this).isLoggedIn()) {
+            findNavController(fragmentContainer.id).popBackStack()
+            findNavController(fragmentContainer.id).navigate(R.id.loginFragment)
+        }
     }
+
 }

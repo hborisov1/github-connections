@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.githubconnections.R
 import com.example.githubconnections.databinding.FragmentUserDetailsBinding
+import com.example.githubconnections.utils.SharedPrefsUtils
 
 class UserDetailsFragment : Fragment() {
 
@@ -24,11 +25,16 @@ class UserDetailsFragment : Fragment() {
                 container,
                 false
             )
+
         dataBinding.textView4.setOnClickListener { v ->
             v.findNavController().navigate(R.id.action_userDetailsFragment_to_usersListFragment)
         }
         dataBinding.textView5.setOnClickListener { v ->
             v.findNavController().navigate(R.id.action_userDetailsFragment_to_usersListFragment)
+        }
+        dataBinding.buttonTestLogout.setOnClickListener { v ->
+            SharedPrefsUtils(context).setUserLoggedOut()
+            v.findNavController().navigate(R.id.action_userDetailsFragment_to_loginFragment)
         }
         return dataBinding.root
     }
