@@ -4,15 +4,21 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.githubconnections.databinding.ActivityMainBinding
 import com.example.githubconnections.utils.UserUtils
-import kotlinx.android.synthetic.main.activity_main.*
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +28,14 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val navController = findNavController(R.id.fragmentContainer)
-        val appBarConfig = AppBarConfiguration(setOf(R.id.loginFragment, R.id.userDetailsFragment, R.id.usersListFragment)) // TODO leave only loginFragmentHere, after fixing the bug with up button for current user
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        val appBarConfig = AppBarConfiguration(
+            setOf(
+                R.id.loginFragment,
+                R.id.userDetailsFragment,
+                R.id.usersListFragment
+            )
+        ) // TODO leave only loginFragmentHere, after fixing the bug with up button for current user
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 // TODO set dynamic titles (get them from arguments)
                 R.id.loginFragment -> supportActionBar?.title = getString(R.string.fragment_label_login)
@@ -40,5 +52,7 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.loginFragment)
         }
     }
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
 }
