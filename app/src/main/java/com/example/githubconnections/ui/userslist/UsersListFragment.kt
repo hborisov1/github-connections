@@ -16,11 +16,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.githubconnections.AppExecutors
 import com.example.githubconnections.R
+import com.example.githubconnections.api.ApiSuccessResponse
 import com.example.githubconnections.binding.FragmentDataBindingComponent
 import com.example.githubconnections.databinding.FragmentUsersListBinding
 import com.example.githubconnections.di.Injectable
 import com.example.githubconnections.ui.common.UserListAdapter
-import com.example.githubconnections.ui.userdetails.UserDetailsFragmentDirections
 import com.example.githubconnections.utils.UserUtils
 import javax.inject.Inject
 
@@ -54,9 +54,6 @@ class UsersListFragment : Fragment(), Injectable {
                 false,
                 dataBindingComponent
             )
-        dataBinding.button.setOnClickListener { v ->
-            v.findNavController().navigate(R.id.action_usersListFragment_to_userDetailsFragment)
-        }
         dataBinding.buttonTestLogout.setOnClickListener { v ->
             UserUtils(context).setUserLoggedOut()
             v.findNavController().navigate(R.id.action_usersListFragment_to_loginFragment)
@@ -69,7 +66,7 @@ class UsersListFragment : Fragment(), Injectable {
             .get(UsersListViewModel::class.java)
         val username = args.username
         val usersType = args.usersType
-        usersListViewModel.setUsername(username)
+        usersListViewModel.setSearchPair(Pair(username, usersType))
         dataBinding.setLifecycleOwner(viewLifecycleOwner)
 
         val usersAdapter =
@@ -77,7 +74,11 @@ class UsersListFragment : Fragment(), Injectable {
                 dataBindingComponent = dataBindingComponent,
                 appExecutors = appExecutors
             ) { user ->
-                findNavController().navigate(UsersListFragmentDirections.actionUsersListFragmentToUserDetailsFragment(user.username))
+                findNavController().navigate(
+                    UsersListFragmentDirections.actionUsersListFragmentToUserDetailsFragment(
+                        user.username
+                    )
+                )
             }
         dataBinding.recyclerViewUsers.adapter = usersAdapter
         this.adapter = usersAdapter
@@ -87,7 +88,9 @@ class UsersListFragment : Fragment(), Injectable {
 
     private fun initUserList() {
         usersListViewModel.users.observe(viewLifecycleOwner, Observer { users ->
-            adapter.submitList(users?.data)
+            if (users is ApiSuccessResponse) {
+                adapter.submitList(users.body)
+            }
         })
     }
 

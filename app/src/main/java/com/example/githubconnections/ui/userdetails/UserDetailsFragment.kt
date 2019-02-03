@@ -53,18 +53,20 @@ class UserDetailsFragment : Fragment(), Injectable {
                 dataBindingComponent
             )
 
-        dataBinding.textView4.setOnClickListener { v ->
+        dataBinding.buttonFollowers.setOnClickListener { v ->
+            v.findNavController().navigate(
+                UserDetailsFragmentDirections.actionUserDetailsFragmentToUsersListFragment(
+                    username = userDetailsViewModel.username.value!!,
+                    usersType = "followers"
+                )
+            )
+        }
+        dataBinding.buttonFollowing.setOnClickListener { v ->
             v.findNavController().navigate(
                 UserDetailsFragmentDirections.actionUserDetailsFragmentToUsersListFragment(
                     username = userDetailsViewModel.username.value!!,
                     usersType = "following"
                 )
-            )
-        }
-        dataBinding.textView5.setOnClickListener { v ->
-            UserDetailsFragmentDirections.actionUserDetailsFragmentToUsersListFragment(
-                username = userDetailsViewModel.username.value!!,
-                usersType = "followers"
             )
         }
         dataBinding.buttonTestLogout.setOnClickListener { v ->

@@ -68,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/buttonFollowers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -78,14 +78,14 @@
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/buttonFollowing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/user_details_following_count"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonFollowers" />
 
         <TextView
             android:id="@+id/textViewName"
@@ -126,9 +126,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{`` + user.data.followersCount}"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonFollowers"
+            app:layout_constraintStart_toEndOf="@+id/buttonFollowers"
+            app:layout_constraintTop_toTopOf="@+id/buttonFollowers"
             tools:text="14" />
 
         <TextView
@@ -137,9 +137,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{`` + user.data.followingCount}"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="@+id/textView5"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonFollowing"
+            app:layout_constraintStart_toEndOf="@+id/buttonFollowing"
+            app:layout_constraintTop_toTopOf="@+id/buttonFollowing"
             tools:text="22" />
 
         <Button
@@ -177,7 +177,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/user_details_repos_count"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonFollowing" />
 
         <TextView
             android:id="@+id/textViewRepos"

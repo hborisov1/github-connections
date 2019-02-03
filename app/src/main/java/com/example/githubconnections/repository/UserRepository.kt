@@ -7,7 +7,6 @@ import com.example.githubconnections.api.GitHubService
 import com.example.githubconnections.db.UserDao
 import com.example.githubconnections.model.Resource
 import com.example.githubconnections.model.User
-import com.example.githubconnections.utils.AbsentLiveData
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,7 +23,7 @@ class UserRepository @Inject constructor(
                 userDao.insert(item)
             }
 
-            override fun shouldFetch(data: User?) = data == null
+            override fun shouldFetch(data: User?) = true
 
             override fun loadFromDb() = userDao.findByUsername(username)
 
@@ -32,17 +31,10 @@ class UserRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun loadFollowers(username: String): LiveData<Resource<List<User>>> {
-        return object : NetworkBoundResource<List<User>, List<User>>(appExecutors) {
-            override fun shouldFetch(data: List<User>?): Boolean = true //TODO always fetch for now
-
-            override fun loadFromDb(): LiveData<List<User>> = AbsentLiveData.create() //TODO should change this..
-
-            override fun createCall(): LiveData<ApiResponse<List<User>>> = githubService.getFollowers(username)
-
-            override fun saveCallResult(item: List<User>) {
-                userDao.insertUsers(item)
-            }
-        }.asLiveData()
+    fun loadFollowers(username: String, userType: String): LiveData<ApiResponse<List<User>>> {
+        return githubService.getFollowersFollowing(
+            username,
+            userType
+        ) // TODO do it with NetworkBoundResource - offline mode should be supported...
     }
 }

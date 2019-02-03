@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.githubconnections.model.Resource
+import com.example.githubconnections.api.ApiResponse
 import com.example.githubconnections.model.User
 import com.example.githubconnections.repository.UserRepository
 import com.example.githubconnections.utils.AbsentLiveData
@@ -12,21 +12,21 @@ import javax.inject.Inject
 
 class UsersListViewModel @Inject constructor(userRepository: UserRepository) : ViewModel() {
 
-    private val _username = MutableLiveData<String>()
-    val username: LiveData<String>
-        get() = _username
-    val users: LiveData<Resource<List<User>>> = Transformations
-        .switchMap(_username) { username ->
-            if (username == null) {
+    private val _searchPair = MutableLiveData<Pair<String, String>>()//first is username, second is userType
+    val searchPair: LiveData<Pair<String, String>>
+        get() = _searchPair
+    val users: LiveData<ApiResponse<List<User>>> = Transformations
+        .switchMap(_searchPair) { searchPair ->
+            if (searchPair == null) {
                 AbsentLiveData.create()
             } else {
-                userRepository.loadFollowers(username) //TODO add following too
+                userRepository.loadFollowers(searchPair.first, searchPair.second)
             }
         }
 
-    fun setUsername(username: String?) {
-        if (_username.value != username) {
-            _username.value = username
+    fun setSearchPair(searchPair: Pair<String, String>?) {
+        if (_searchPair.value != searchPair) {
+            _searchPair.value = searchPair
         }
     }
 
