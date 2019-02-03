@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
         toolbar.setupWithNavController(navController, appBarConfig)
 
+        // TODO this causes clearing of the EditText in LoginFragment on orientation change, should be fixed
         if (!UserUtils(this).isLoggedIn()) {
             navController.popBackStack()
             navController.navigate(R.id.loginFragment)
