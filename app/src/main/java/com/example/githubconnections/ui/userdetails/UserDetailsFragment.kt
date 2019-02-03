@@ -2,9 +2,7 @@ package com.example.githubconnections.ui.userdetails
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.githubconnections.AppExecutors
 import com.example.githubconnections.R
@@ -69,10 +68,7 @@ class UserDetailsFragment : Fragment(), Injectable {
                 )
             )
         }
-        dataBinding.buttonTestLogout.setOnClickListener { v ->
-            UserUtils(context).setUserLoggedOut()
-            v.findNavController().navigate(R.id.action_userDetailsFragment_to_loginFragment)
-        }
+        setHasOptionsMenu(true)
         return dataBinding.root
     }
 
@@ -95,6 +91,26 @@ class UserDetailsFragment : Fragment(), Injectable {
         userDetailsViewModel.repositories.observe(viewLifecycleOwner, Observer { repos ->
             adapter.submitList(repos?.data)
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.acion_logout -> {
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun logout() {
+        UserUtils(context).setUserLoggedOut()
+        findNavController().navigate(R.id.action_userDetailsFragment_to_loginFragment)
     }
 
 }

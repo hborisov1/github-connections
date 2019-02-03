@@ -8,13 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.userslist.UsersListFragment">
 
-        <Button
-            android:id="@+id/buttonTestLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Logout" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewUsers"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

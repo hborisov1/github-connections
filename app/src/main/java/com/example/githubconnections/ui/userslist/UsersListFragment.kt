@@ -2,9 +2,7 @@ package com.example.githubconnections.ui.userslist
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -54,10 +52,7 @@ class UsersListFragment : Fragment(), Injectable {
                 false,
                 dataBindingComponent
             )
-        dataBinding.buttonTestLogout.setOnClickListener { v ->
-            UserUtils(context).setUserLoggedOut()
-            v.findNavController().navigate(R.id.action_usersListFragment_to_loginFragment)
-        }
+        setHasOptionsMenu(true)
         return dataBinding.root
     }
 
@@ -94,5 +89,24 @@ class UsersListFragment : Fragment(), Injectable {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.acion_logout -> {
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun logout() {
+        UserUtils(context).setUserLoggedOut()
+        findNavController().navigate(R.id.action_usersListFragment_to_loginFragment)
+    }
 
 }

@@ -1,6 +1,8 @@
 package com.example.githubconnections
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -34,15 +36,16 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 R.id.userDetailsFragment,
                 R.id.usersListFragment
             )
-        ) // TODO leave only loginFragmentHere, after fixing the bug with up button for current user
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        )
+        navController.addOnDestinationChangedListener { _, destination, arguments ->
             when (destination.id) {
-                // TODO set dynamic titles (get them from arguments)
                 R.id.loginFragment -> supportActionBar?.title = getString(R.string.fragment_label_login)
                 R.id.userDetailsFragment -> supportActionBar?.title = getString(R.string.fragment_label_user_details)
-                R.id.usersListFragment -> supportActionBar?.title = getString(R.string.fragment_label_users_list)
-                // TODO when destination is UserDetailsFragment and title is the same as current user - set userDetailsFragment as AppBarConfiguration home
-                // this could cause potential bug, when you find the current user in someones followers/following
+                R.id.usersListFragment -> supportActionBar?.title =
+                    if (arguments?.getString("usersType", "followers").equals("following"))//TODO hardcoded strings...
+                        getString(R.string.fragment_label_users_list_following)
+                    else
+                        getString(R.string.fragment_label_users_list_followers)
             }
         }
         toolbar.setupWithNavController(navController, appBarConfig)

@@ -4,9 +4,7 @@ package com.example.githubconnections.ui.login
 import android.content.Context
 import android.os.Bundle
 import android.os.IBinder
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -64,7 +62,7 @@ class LoginFragment : Fragment(), Injectable {
                     }
                     Status.ERROR -> {
                         dataBinding.loading = false
-                        showSnackbarError(v, R.string.error_not_found)
+                        showSnackbarError(v, R.string.error_not_found) // TODO handle exceeded API rate limit error...
                     }
                     Status.LOADING -> dataBinding.loading = true
 
