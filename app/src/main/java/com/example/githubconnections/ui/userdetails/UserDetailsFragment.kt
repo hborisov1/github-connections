@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.githubconnections.R
+import com.example.githubconnections.binding.FragmentDataBindingComponent
 import com.example.githubconnections.databinding.FragmentUserDetailsBinding
 import com.example.githubconnections.di.Injectable
 import com.example.githubconnections.utils.UserUtils
@@ -28,6 +30,8 @@ class UserDetailsFragment : Fragment(), Injectable {
 
     private val args: UserDetailsFragmentArgs by navArgs()
 
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,7 +41,8 @@ class UserDetailsFragment : Fragment(), Injectable {
                 inflater,
                 R.layout.fragment_user_details,
                 container,
-                false
+                false,
+                dataBindingComponent
             )
 
         dataBinding.textView4.setOnClickListener { v ->
