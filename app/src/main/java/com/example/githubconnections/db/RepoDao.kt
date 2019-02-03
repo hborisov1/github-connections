@@ -21,6 +21,6 @@ interface RepoDao {
         SELECT * FROM Repo
         WHERE owner_username = :owner
         ORDER BY forksCount DESC"""
-    )
+    )// TODO sort by watchers count as secondary criteria
     fun loadRepositories(owner: String): LiveData<List<Repo>>
 }

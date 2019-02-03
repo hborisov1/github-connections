@@ -12,7 +12,7 @@ interface GitHubService {
     @GET("users/{username}")
     fun getUser(@Path ("username") username: String) : LiveData<ApiResponse<User>>
 
-    @GET("users/{username}/repos")
+    @GET("users/{username}/repos")//TODO sort by forks and by watchers count
     fun getRepos(@Path ("username") username: String) : LiveData<ApiResponse<List<Repo>>>
 
     @GET("users/{username}/followers")

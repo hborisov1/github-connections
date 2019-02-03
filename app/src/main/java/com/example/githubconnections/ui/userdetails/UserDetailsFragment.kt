@@ -36,7 +36,7 @@ class UserDetailsFragment : Fragment(), Injectable {
 
     private val args: UserDetailsFragmentArgs by navArgs()
 
-    lateinit var adapter : RepoListAdapter
+    lateinit var adapter: RepoListAdapter
 
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
@@ -54,10 +54,18 @@ class UserDetailsFragment : Fragment(), Injectable {
             )
 
         dataBinding.textView4.setOnClickListener { v ->
-            v.findNavController().navigate(R.id.action_userDetailsFragment_to_usersListFragment)
+            v.findNavController().navigate(
+                UserDetailsFragmentDirections.actionUserDetailsFragmentToUsersListFragment(
+                    username = userDetailsViewModel.username.value!!,
+                    usersType = "following"
+                )
+            )
         }
         dataBinding.textView5.setOnClickListener { v ->
-            v.findNavController().navigate(R.id.action_userDetailsFragment_to_usersListFragment)
+            UserDetailsFragmentDirections.actionUserDetailsFragmentToUsersListFragment(
+                username = userDetailsViewModel.username.value!!,
+                usersType = "followers"
+            )
         }
         dataBinding.buttonTestLogout.setOnClickListener { v ->
             UserUtils(context).setUserLoggedOut()
@@ -74,7 +82,7 @@ class UserDetailsFragment : Fragment(), Injectable {
         dataBinding.user = userDetailsViewModel.user
         dataBinding.setLifecycleOwner(viewLifecycleOwner)
 
-        val reposAdapter = RepoListAdapter(dataBindingComponent,appExecutors)
+        val reposAdapter = RepoListAdapter(dataBindingComponent, appExecutors)
         dataBinding.recyclerViewRepos.adapter = reposAdapter
         this.adapter = reposAdapter
 
