@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.githubconnections.AppExecutors
 import com.example.githubconnections.R
 import com.example.githubconnections.binding.FragmentDataBindingComponent
 import com.example.githubconnections.databinding.FragmentUserDetailsBinding
 import com.example.githubconnections.di.Injectable
+import com.example.githubconnections.ui.common.RepoListAdapter
 import com.example.githubconnections.utils.UserUtils
 import javax.inject.Inject
 
@@ -24,11 +27,16 @@ class UserDetailsFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var appExecutors: AppExecutors
+
     lateinit var userDetailsViewModel: UserDetailsViewModel
 
     lateinit var dataBinding: FragmentUserDetailsBinding
 
     private val args: UserDetailsFragmentArgs by navArgs()
+
+    lateinit var adapter : RepoListAdapter
 
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
@@ -65,6 +73,18 @@ class UserDetailsFragment : Fragment(), Injectable {
         userDetailsViewModel.setUsername(username)
         dataBinding.user = userDetailsViewModel.user
         dataBinding.setLifecycleOwner(viewLifecycleOwner)
+
+        val reposAdapter = RepoListAdapter(dataBindingComponent,appExecutors)
+        dataBinding.recyclerViewRepos.adapter = reposAdapter
+        this.adapter = reposAdapter
+
+        initRepoList()
+    }
+
+    private fun initRepoList() {
+        userDetailsViewModel.repositories.observe(viewLifecycleOwner, Observer { repos ->
+            adapter.submitList(repos?.data)
+        })
     }
 
 }
