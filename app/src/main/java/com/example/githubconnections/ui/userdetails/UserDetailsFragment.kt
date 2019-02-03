@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.githubconnections.R
 import com.example.githubconnections.databinding.FragmentUserDetailsBinding
 import com.example.githubconnections.di.Injectable
-import com.example.githubconnections.ui.userslist.UsersListViewModel
 import com.example.githubconnections.utils.UserUtils
 import javax.inject.Inject
 
@@ -24,12 +24,16 @@ class UserDetailsFragment : Fragment(), Injectable {
 
     lateinit var userDetailsViewModel: UserDetailsViewModel
 
+    lateinit var dataBinding: FragmentUserDetailsBinding
+
+    private val args: UserDetailsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding =
-            DataBindingUtil.inflate<FragmentUserDetailsBinding>(
+        dataBinding =
+            DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_user_details,
                 container,
@@ -52,6 +56,10 @@ class UserDetailsFragment : Fragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         userDetailsViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(UserDetailsViewModel::class.java)
+        val username = if (!args.username.isEmpty()) args.username else UserUtils(context).getLoggedUser()
+        userDetailsViewModel.setUsername(username)
+        dataBinding.user = userDetailsViewModel.user
+        dataBinding.setLifecycleOwner(viewLifecycleOwner)
     }
 
 }

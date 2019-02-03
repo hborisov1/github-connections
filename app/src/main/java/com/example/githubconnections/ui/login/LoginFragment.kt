@@ -4,7 +4,6 @@ package com.example.githubconnections.ui.login
 import android.content.Context
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.example.githubconnections.R
 import com.example.githubconnections.databinding.FragmentLoginBinding
 import com.example.githubconnections.di.Injectable
 import com.example.githubconnections.model.Status
 import com.example.githubconnections.model.User
+import com.example.githubconnections.utils.UserUtils
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -55,7 +56,7 @@ class LoginFragment : Fragment(), Injectable {
                     if (result.data == null) {
                         showSnackbarError(v, R.string.error_unexpected_error)
                     } else {
-                        onSuccessfullLogin(result.data)
+                        onSuccessfulLogin(v, result.data)
                     }
                 }
                 Status.ERROR -> {
@@ -68,10 +69,10 @@ class LoginFragment : Fragment(), Injectable {
         })
     }
 
-    private fun onSuccessfullLogin(user: User) {
-        Log.i("ICO", user.toString())
-//            UserUtils(context).setUserLoggedIn()
-//            v.findNavController().navigate(R.id.action_loginFragment_to_userDetailsFragment)
+    private fun onSuccessfulLogin(v: View, user: User) {
+        UserUtils(context).setUserLoggedIn(user.username)
+        val action = LoginFragmentDirections.actionLoginFragmentToUserDetailsFragment(user.username)
+        v.findNavController().navigate(action)
     }
 
     private fun dismissKeyboard(windowToken: IBinder) {
