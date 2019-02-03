@@ -22,4 +22,5 @@
     <string name="error_not_available">N/A</string>
     <string name="args_empty_string" />
     <string name="error_username_empty">Username is empty</string>
+    <string name="error_empty_results">Empty Result</string>
 </resources>

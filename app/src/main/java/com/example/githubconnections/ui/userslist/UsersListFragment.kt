@@ -85,6 +85,11 @@ class UsersListFragment : Fragment(), Injectable {
         usersListViewModel.users.observe(viewLifecycleOwner, Observer { users ->
             if (users is ApiSuccessResponse) {
                 adapter.submitList(users.body)
+                if (users.body.isEmpty()) {
+                    dataBinding.emptyResult = true
+                }
+            } else {
+                dataBinding.emptyResult = true
             }
         })
     }
