@@ -47,26 +47,30 @@ class LoginFragment : Fragment(), Injectable {
     }
 
     private fun performLogin(v: View) {
-        dismissKeyboard(v.windowToken)
         val username = dataBinding.editTextUsername.text.toString()
-        loginViewModel.getUser(username).observe(viewLifecycleOwner, Observer { result ->
-            when (result.status) {
-                Status.SUCCESS -> {
-                    dataBinding.loading = false
-                    if (result.data == null) {
-                        showSnackbarError(v, R.string.error_unexpected_error)
-                    } else {
-                        onSuccessfulLogin(v, result.data)
+        if (username.isEmpty()) {
+            dataBinding.editTextUsername.error = getString(R.string.error_username_empty)
+        } else {
+            dismissKeyboard(v.windowToken)
+            loginViewModel.getUser(username).observe(viewLifecycleOwner, Observer { result ->
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        dataBinding.loading = false
+                        if (result.data == null) {
+                            showSnackbarError(v, R.string.error_unexpected_error)
+                        } else {
+                            onSuccessfulLogin(v, result.data)
+                        }
                     }
-                }
-                Status.ERROR -> {
-                    dataBinding.loading = false
-                    showSnackbarError(v, R.string.error_not_found)
-                }
-                Status.LOADING -> dataBinding.loading = true
+                    Status.ERROR -> {
+                        dataBinding.loading = false
+                        showSnackbarError(v, R.string.error_not_found)
+                    }
+                    Status.LOADING -> dataBinding.loading = true
 
-            }
-        })
+                }
+            })
+        }
     }
 
     private fun onSuccessfulLogin(v: View, user: User) {
